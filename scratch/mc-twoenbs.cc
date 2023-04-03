@@ -861,15 +861,15 @@ main (int argc, char *argv[])
     BaseSt_CellId_to_nodeId[mmdev->GetCellId()] = i;
     Tottal_UE_connected[i] = 0; 
     std::cout<<"mmWave Base Station node ID = "<<i<<" cell ID = "<<mmdev->GetCellId()<<std::endl;
+    std::cout << "I value: " << i << " " << mmWaveEnbNodes.Get(i)->GetId() << std::endl;
   }
   //Populating UE_Imsi_to_nodeID.. and connected mmWave Base station ..
   for(uint32_t i = 0 ; i < ueNodes.GetN() ; i++)
   {
     Ptr<McUeNetDevice> mcuedev = ueNodes.Get(i)->GetDevice (0)->GetObject <McUeNetDevice> ();
-    std::cout<<"IMSI of UE node id = "<< i << " IMSI = "<< mcuedev->GetImsi();
+    std::cout<<"IMSI of UE node id = "<< i << " IMSI = "<< mcuedev->GetImsi() << std::endl;
     Ue_Imsi_to_nodeID[mcuedev->GetImsi()] = i;
     connected_mmWave[i] = -1;
-    std::cout<<std::endl;
   }
 
   for (uint32_t u = 0; u < mmWaveEnbNodes.GetN (); ++u)
