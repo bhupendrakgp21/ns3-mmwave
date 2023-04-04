@@ -101,6 +101,10 @@ MmWaveSpectrumPhy::GetTypeId (void)
                      "State Value to trace",
                      MakeTraceSourceAccessor (&MmWaveSpectrumPhy::m_intState),
                      "ns3::TracedValueCallback::Int32")
+    .AddTraceSource ("CheckIfSleepEnabled",
+                     "Check If Sleep Enabled",
+                     MakeTraceSourceAccessor (&MmWaveSpectrumPhy::m_sleepTracing),
+                     "ns3::TracedValueCallback::Int32")
     .AddAttribute ("MakeItSleep",
                    "Make the base station to sleep {by default false].",
                    BooleanValue (false),
@@ -247,10 +251,12 @@ MmWaveSpectrumPhy::ChangeState (State newState)
   m_intState = newState;
   if (m_sleepEnabled)
   {
+    m_sleepTracing = 1;
     m_state = IDLE;
   }
   else
   {
+    m_sleepTracing = 0;
     // NS_LOG_LOGIC (this << " state: " << m_state << " -> " << newState);
     m_state = newState;
     switch (newState)

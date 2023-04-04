@@ -100,14 +100,14 @@ public:
      * \returns deep sleep current of the mmwave device.
      */
     double GetDeepSleepA (void) const;
-
+    int32_t sleep_checker;
     /**
      * \brief Sets deep sleep current in Amperes.
      *
      * \param deepSleepCurrentA the deep sleep current
      */
     void SetDeepSleepA (double deepSleepCurrentA);
-
+    void CheckIfSleeping (int32_t old_state, int32_t new_state);
   
     /**
      * \brief Gets Rx current in Amperes.

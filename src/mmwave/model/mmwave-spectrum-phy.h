@@ -307,6 +307,7 @@ private:
   bool m_dataErrorModelEnabled;       // when true (default) the phy error model is enabled
   bool m_ctrlErrorModelEnabled;       // when true (default) the phy error model is enabled for DL ctrl frame
   bool m_sleepEnabled;                // when true make the base station to sleep or IDLE
+  TracedValue<int32_t> m_sleepTracing;
   TypeId m_errorModelType {Object::GetTypeId()}; //!< Error model type by default is MmWaveLteMiErrorModel
 
   Ptr<MmWaveHarqPhy> m_harqPhyModule;

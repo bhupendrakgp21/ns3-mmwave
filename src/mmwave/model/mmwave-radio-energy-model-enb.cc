@@ -26,6 +26,9 @@
 #include "ns3/log.h"
 #include "ns3/config-store-module.h"
 #include "ns3/config.h"
+#include "ns3/mmwave-enb-net-device.h"
+#include "ns3/mmwave-enb-phy.h"
+#include "ns3/mmwave-spectrum-phy.h"
 
 namespace ns3 {
 NS_LOG_COMPONENT_DEFINE ("MmWaveRadioEnergyModelEnb");
@@ -186,6 +189,11 @@ MmWaveRadioEnergyModelEnb::SetEnergyRechargedCallback (
   m_energyRechargedCallback = callback;
 }
 
+void
+MmWaveRadioEnergyModelEnb::CheckIfSleeping (int32_t old_state, int32_t new_state)
+{
+  sleep_checker = new_state;
+}
 void 
 MmWaveRadioEnergyModelEnb::ChangeStateEvent(int32_t oldState, int32_t newState)
 {
@@ -195,13 +203,23 @@ void
 MmWaveRadioEnergyModelEnb::ChangeState (int state)
 {
   NS_LOG_FUNCTION (this << state);
-
+  Ptr<ns3::mmwave::MmWaveEnbPhy> enbPhy = this->GetNode()->GetDevice(0)->GetObject<ns3::mmwave::MmWaveEnbNetDevice> ()->GetPhy ();
+  Ptr<ns3::mmwave::MmWaveSpectrumPhy> enbdl= enbPhy->GetDlSpectrumPhy ();
+  enbdl->TraceConnectWithoutContext("CheckIfSleepEnabled", MakeCallback(&MmWaveRadioEnergyModelEnb::CheckIfSleeping, this));
 
   Time duration = Simulator::Now () - m_lastUpdateTime;
   NS_ASSERT (duration.IsPositive ());
 
   double supplyVoltage = m_source->GetSupplyVoltage ();
-  double energyToDecrease = duration.GetSeconds () * GetStateA (m_currentState) * supplyVoltage;
+  double energyToDecrease = 0;
+  if (sleep_checker == 1 && m_currentState == 0)
+  {
+    energyToDecrease = duration.GetSeconds () * 6.2 * supplyVoltage; 
+  }
+  else
+  {
+    energyToDecrease = duration.GetSeconds () * GetStateA (m_currentState) * supplyVoltage;
+  }
 
   m_totalEnergyConsumption += energyToDecrease;
   NS_ASSERT (m_totalEnergyConsumption <= m_source->GetInitialEnergy ());
