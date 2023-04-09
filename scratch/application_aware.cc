@@ -774,10 +774,10 @@ main (int argc, char *argv[])
  
  NodeContainer lteEnbNodes;
  NodeContainer allEnbNodes;
- uint16_t num_of_mmWaveEnb = 5;
+ uint16_t num_of_mmWaveEnb = 10;
  uint32_t num_of_lteEnbNode = 1;
-uint32_t num_of_appUEs = 4;
-  uint32_t num_of_noAppUEs = 3;
+uint32_t num_of_appUEs = 5;
+  uint32_t num_of_noAppUEs = 5;
  mmWaveEnbNodes.Create (num_of_mmWaveEnb);
  lteEnbNodes.Create (num_of_lteEnbNode);
  appUENodes.Create (num_of_appUEs);
@@ -789,7 +789,7 @@ uint32_t num_of_appUEs = 4;
  // Vector mmw1Position = Vector (50, 70, 3);
  // Vector mmw2Position = Vector (150, 70, 3);
  //*********defining position for all 10 ******************||
- int p[num_of_mmWaveEnb][2] = {{1,1}, {701, 701}, {701, 751}, {751, 701}, {751, 751} };
+ int p[num_of_mmWaveEnb][2] = {{50,50}, {401, 491}, {571, 751}, {631, 510}, {491, 501},{711, 711}, {511, 421}, {511, 611}, {421, 721}, {671,731}};
 //  deployEnb(p,num_of_mmWaveEnb);
  double gNbHeight = 10;
 
@@ -821,14 +821,16 @@ MobilityHelper appUEMobility, noAppUEMobility;
   double x_random = 0, y_random = 0;
   
     noAppUEPositionAlloc->Add (Vector (10, 10, 1.5));
-    noAppUEPositionAlloc->Add (Vector (5,5, 1.5));
-    noAppUEPositionAlloc->Add (Vector (10, 5, 1.5));
-    noAppUEPositionAlloc->Add (Vector (5, 10, 1.5));
+    noAppUEPositionAlloc->Add (Vector (81,41, 1.5));
+    noAppUEPositionAlloc->Add (Vector (31, 89, 1.5));
+    noAppUEPositionAlloc->Add (Vector (20, 50, 1.5));
+    noAppUEPositionAlloc->Add (Vector (41, 75, 1.5));
 
-    appUEPositionAlloc->Add (Vector (725, 725, 1.5));
-    appUEPositionAlloc->Add (Vector (726, 725, 1.5));
-    appUEPositionAlloc->Add (Vector (725, 726, 1.5));
-    appUEPositionAlloc->Add (Vector (726, 726, 1.5));
+    appUEPositionAlloc->Add (Vector (591, 655, 1.5));
+    appUEPositionAlloc->Add (Vector (683, 745, 1.5));
+    appUEPositionAlloc->Add (Vector (500, 620, 1.5));
+    appUEPositionAlloc->Add (Vector (741, 691, 1.5));
+    appUEPositionAlloc->Add (Vector (722, 555, 1.5));
 
   //uemobility.SetMobilityModel ("ns3::ConstantVelocityMobilityModel");
    appUEMobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
